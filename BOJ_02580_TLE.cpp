@@ -1,4 +1,5 @@
 // https://www.acmicpc.net/problem/2580
+// this code is Time Limit Exceeded
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -52,15 +53,15 @@ void get_can(int start){
 	int input[10];
 	for(int i=start; i<blank_count; i++){
 		fill_n(input, 10, 0);
-		// 가로 체크
+		// check the across 
 		for(int j=0; j<9; j++){
 			input[map[BK[i].I][j]]=1;
 		}
-		// 세로 체크
+		// check the down
 		for(int j=0; j<9; j++){
 			input[map[j][BK[i].J]]=1;
 		}
-		// 네모 체크 
+		// check the square
 		for(int j=0; j<3; j++){
 			for(int k=0; k<3; k++){
 				input[map[((BK[i].room-1)/3)*3+j][((BK[i].room-1)%3)*3+k]]=1;
@@ -76,19 +77,6 @@ void get_can(int start){
 	}
 }
 int check_sudoku(){
-	for(int i=0; i<9; i++){
-		if(!(map[i][0]*map[i][1]*map[i][2]*map[i][3]*map[i][4]*map[i][5]*map[i][6]*map[i][7]*map[i][8]==362880 && 
-			map[i][0]+map[i][1]+map[i][2]+map[i][3]+map[i][4]+map[i][5]+map[i][6]+map[i][7]+map[i][8]==45)) return -1;
-		if(!(map[0][i]*map[1][i]*map[2][i]*map[3][i]*map[4][i]*map[5][i]*map[6][i]*map[7][i]*map[8][i]==362880 && 
-			map[0][i]+map[1][i]+map[2][i]+map[3][i]+map[4][i]+map[5][i]+map[6][i]+map[7][i]+map[8][i]==45)) return -1;
-		if(!(map[(i/3)*3+0][(i%3)*3+0]*map[(i/3)*3+0][(i%3)*3+1]*map[(i/3)*3+0][(i%3)*3+2]*
-			map[(i/3)*3+1][(i%3)*3+0]*map[(i/3)*3+1][(i%3)*3+1]*map[(i/3)*3+1][(i%3)*3+2]*
-			map[(i/3)*3+2][(i%3)*3+0]*map[(i/3)*3+2][(i%3)*3+1]*map[(i/3)*3+2][(i%3)*3+2]==362880 && 
-			map[(i/3)*3+0][(i%3)*3+0]+map[(i/3)*3+0][(i%3)*3+1]+map[(i/3)*3+0][(i%3)*3+2]+
-			map[(i/3)*3+1][(i%3)*3+0]+map[(i/3)*3+1][(i%3)*3+1]+map[(i/3)*3+1][(i%3)*3+2]+
-			map[(i/3)*3+2][(i%3)*3+0]+map[(i/3)*3+2][(i%3)*3+1]+map[(i/3)*3+2][(i%3)*3+2]==45)) return -1;
-	}
-	/*
 	int temp[10];
 	for(int i=0; i<9; i++){
 		fill_n(temp, 10, 0);
@@ -113,7 +101,6 @@ int check_sudoku(){
 			}
 		}
 	}
-	*/
 	return 1;
 }
 
@@ -163,17 +150,6 @@ int main(){
 	
 	get_can(0);
 	sort(BK,BK+blank_count,comp);
-	/*
-	cout<<"\n";
-	for(int i=0; i<blank_count; i++){
-		cout << "i : " << BK[i].I << ", j : " << BK[i].J << " -> ";
-		for(int j=0; j<BK[i].can_count; j++){
-			cout << BK[i].can[j] << ' ';
-		}
-		cout << '\n';
-	}
-	cout<<'\n';
-	*/
 	for(int i=0; i<blank_count; i++){
 		blank_just_one=i;
 		if(BK[i].can_count==1){
